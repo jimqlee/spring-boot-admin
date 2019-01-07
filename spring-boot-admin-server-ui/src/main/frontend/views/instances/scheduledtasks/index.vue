@@ -16,22 +16,26 @@
 
 <template>
   <section class="section" :class="{ 'is-loading' : !hasLoaded }">
-    <div class="container" v-if="hasLoaded">
+    <template v-if="hasLoaded">
       <div v-if="error" class="message is-danger">
         <div class="message-body">
           <strong>
-            <font-awesome-icon class="has-text-danger" icon="exclamation-triangle"/>
+            <font-awesome-icon class="has-text-danger" icon="exclamation-triangle" />
             Fetching scheduled tasks failed.
           </strong>
-          <p v-text="error.message"/>
+          <p v-text="error.message" />
         </div>
       </div>
       <div v-else-if="!hasData" class="message is-warning">
-        <div class="message-body">No scheduled tasks present.</div>
+        <div class="message-body">
+          No scheduled tasks present.
+        </div>
       </div>
 
       <template v-if="hasCronData">
-        <h3 class="title">Cron</h3>
+        <h3 class="title">
+          Cron
+        </h3>
         <table class="table is-fullwidth">
           <thead>
             <tr>
@@ -41,15 +45,17 @@
           </thead>
           <tbody v-for="task in cron" :key="task.runnable.target">
             <tr>
-              <td v-text="task.runnable.target"/>
-              <td class="monospaced" v-text="task.expression"/>
+              <td v-text="task.runnable.target" />
+              <td class="monospaced" v-text="task.expression" />
             </tr>
           </tbody>
         </table>
       </template>
 
       <template v-if="hasFixedDelayData">
-        <h3 class="title">Fixed Delay</h3>
+        <h3 class="title">
+          Fixed Delay
+        </h3>
         <table class="metrics table is-fullwidth">
           <thead>
             <tr>
@@ -60,16 +66,18 @@
           </thead>
           <tbody v-for="task in fixedDelay" :key="task.runnable.target">
             <tr>
-              <td v-text="task.runnable.target"/>
-              <td v-text="task.initialDelay"/>
-              <td v-text="task.interval"/>
+              <td v-text="task.runnable.target" />
+              <td v-text="task.initialDelay" />
+              <td v-text="task.interval" />
             </tr>
           </tbody>
         </table>
       </template>
 
       <template v-if="hasFixedRateData">
-        <h3 class="title">Fixed Rate</h3>
+        <h3 class="title">
+          Fixed Rate
+        </h3>
         <table class="metrics table is-fullwidth">
           <thead>
             <tr>
@@ -80,15 +88,14 @@
           </thead>
           <tbody v-for="task in fixedRate" :key="task.runnable.target">
             <tr>
-              <td v-text="task.runnable.target"/>
-              <td v-text="task.initialDelay"/>
-              <td v-text="task.interval"/>
+              <td v-text="task.runnable.target" />
+              <td v-text="task.initialDelay" />
+              <td v-text="task.interval" />
             </tr>
           </tbody>
         </table>
       </template>
-
-    </div>
+    </template>
   </section>
 </template>
 
@@ -148,6 +155,7 @@
         path: 'scheduledtasks',
         component: this,
         label: 'Scheduled Tasks',
+        group: 'Insights',
         order: 950,
         isEnabled: ({instance}) => instance.hasEndpoint('scheduledtasks')
       });
